@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil Empleado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Gestor de Empleados</h1>
+  </header>
+  <div class="container">
+    <h2>Perfil de <%= empleado.nombre %>
+    </h2>
+    <form method="GET" action="/empleado/editar/<%= empleado.id %>" style="margin-top:20px; display:inline-block;">
+      <button type="submit" class="btn-primary">Editar Empleado</button>
+    </form>
+    <div style="display:flex;align-items:center;gap:30px;margin-bottom:30px;">
+      <img src="<%= empleado.foto || '/default-avatar.png' %>" alt="Foto de <%= empleado.nombre %>"
+        class="foto-empleado" style="width:80px;height:80px;">
+      <div>
+        <div class="nombre-empleado" style="font-size:1.5rem;">
+          <%= empleado.nombre %>
+        </div>
+        <div style="color:#555;">
+          <%= empleado.datos %>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+      <strong>Rendimiento estimado:</strong>
+      <%= empleado.rendimiento %>%
+    </div>
+
+    <h3>Informes</h3>
+
+    <% if (informes.length> 0) { %>
+      <ul class="list-informes">
+        <% informes.forEach(inf=> { %>
+          <li>
+            <strong>
+              <%= inf.tipo %>
+            </strong> - <%= inf.importancia %> - <%= inf.contenido %>
+                <form method="POST" action="/informe/eliminar" style="display:inline;">
+                  <input type="hidden" name="id" value="<%= inf.id %>">
+                  <input type="hidden" name="empleado_id" value="<%= empleado.id %>">
+                  <button class="btn-danger" style="margin-left:10px;">Eliminar</button>
+                </form>
+          </li>
+          <% }) %>
+      </ul>
+      <% } else { %>
+        <p style="color: #777;">Este empleado aún no tiene informes.</p>
+        <% } %>
+
+          <button type="button" class="btn-primary" onclick="toggleFormulario()">+ Añadir Informe</button>
+
+          <div id="formularioInforme" style="display:none; margin-top:20px;">
+            <form method="POST" action="/informe/nuevo" class="form-nuevo-empleado">
+              <input type="hidden" name="empleado_id" value="<%= empleado.id %>">
+
+              <label>Tipo:</label>
+              <select name="tipo">
+                <option>Bueno</option>
+                <option>Malo</option>
+              </select>
+
+              <label>Importancia:</label>
+              <select name="importancia">
+                <option>Alta</option>
+                <option>Media</option>
+                <option>Baja</option>
+              </select>
+
+              <label>Contenido:</label>
+              <textarea name="contenido"></textarea>
+
+              <button type="submit">Guardar Informe</button>
+            </form>
+          </div>
+
+          <form method="POST" action="/empleado/evaluar/<%= empleado.id %>" style="margin-top:20px;">
+            <button class="btn-primary" type="submit">Evaluar con IA</button>
+          </form>
+          <script>
+            function toggleFormulario() {
+              const form = document.getElementById("formularioInforme");
+              form.style.display = form.style.display === "none" ? "block" : "none";
+            }
+          </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestor de Empleados</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Gestor de Empleados</h1>
+  </header>
+
+  <div class="container">
+    <h2>Empleados</h2>
+    
+    <button id="btnNuevoEmpleado" class="btn-primary">+ Nuevo Empleado</button>
+
+    <ul class="list-empleados">
+      <% empleados.forEach(empleado => { %>
+        <li>
+          <img src="<%= empleado.foto || '/default-avatar.png' %>" alt="Foto de <%= empleado.nombre %>" class="foto-empleado" />
+          <span class="nombre-empleado"><%= empleado.nombre %></span>
+          <button class="btn-verperfil" data-id="<%= empleado.id %>">Ver Perfil</button>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <script>
+    document.querySelectorAll('.btn-verperfil').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const empleadoId = btn.getAttribute('data-id');
+        window.location.href = `/empleado/${empleadoId}`;
+      });
+    });
+
+    document.getElementById('btnNuevoEmpleado').addEventListener('click', () => {
+      window.location.href = '/empleado/nuevo';
+    });
+  </script>
+</body>
+</html>

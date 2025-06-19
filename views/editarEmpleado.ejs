@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Empleado</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header><h1>Editar Empleado</h1></header>
+  <div class="container">
+    <div class="container-form">
+      <form action="/empleado/editar/<%= empleado.id %>" method="POST" enctype="multipart/form-data">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="<%= empleado.nombre %>" required>
+
+        <label>Datos personales:</label>
+        <textarea name="datos"><%= empleado.datos %></textarea>
+
+        <label>Foto actual:</label><br>
+        <img src="<%= empleado.foto %>" class="foto-empleado-perfil" style="max-width: 500px; max-height: 500px;" />
+
+        <label>Cambiar foto:</label>
+        <input type="file" name="foto" accept="image/*" />
+
+        <div style="display: flex; gap: 15px; margin-top: 25px;">
+          <button class="btn-primary" type="submit">Guardar cambios</button>
+          <form action="/empleado/eliminar/<%= empleado.id %>" method="POST" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este empleado? Esta acción no se puede deshacer.')">
+            <button class="btn-danger" type="submit">Eliminar Empleado</button>
+          </form>
+        </div>
+      </form>
+
+      <a href="/" class="btn-secondary" style="margin-top:20px; display: inline-block;">← Volver</a>
+    </div>
+  </div>
+</body>
+</html>
