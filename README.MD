@@ -126,7 +126,6 @@ Cada empleado tiene:
 -Validación en formularios para evitar envíos incompletos.
 
 
-✍️ Autor
 Desarrollado por Eloi Cata Zapata
-Portafolio: [enlace-a-tu-portafolio]
+
 
